@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
-from api.utils import generate_sitemap, APIException
+from api.utils import generate_sitemap, APIException, check_fields
 from flask_cors import CORS
 
 api = Blueprint('api', __name__)
@@ -20,3 +20,16 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
+    
+@api.route('/registro', methods=['POST'])
+def handle_registro():
+    response_body = request.get_json()
+    fields = ["email", "password", "user_name"]
+    email, user_name, password  =  check_fields(response_body,fields)
+    new_user = User(email,user_name, password)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify(new_user.serialize()), 201
+
