@@ -12,7 +12,14 @@ export const initialStore=()=>{
         title: "Do my homework",
         background: null,
       }
-    ]
+    ],
+    user: [{
+      id: null,
+      name: null,
+      email: null,
+      password: null
+    }],
+    token: null,
   }
 }
 
@@ -31,6 +38,20 @@ export default function storeReducer(store, action = {}) {
       return {
         ...store,
         todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
+      };
+
+    case 'add_user':
+      const { name, email, password } = action.payload
+
+      return {
+        ...store,
+        user: store.user.map((user) => (user.id === id ? { ...user, name: name, email: email, password: password } : user))
+      };
+
+    case 'set_token':
+      return {
+        ...store,
+        token: action.payload
       };
     default:
       throw Error('Unknown action.');

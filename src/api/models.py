@@ -6,10 +6,10 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    user_name: Mapped[str] = mapped_column(String(20), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
+    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=True)
+    user_name: Mapped[str] = mapped_column(String(20), unique=True, nullable=True)
+    password: Mapped[str] = mapped_column(nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=True)
 
     def __init__(self,email,user_name,password):
 
