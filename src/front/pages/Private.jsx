@@ -13,7 +13,7 @@ export const Private = () => {
 
   const handleLogout = () => {
     sessionStorage.removeItem("token"); 
-    navigate("/login");
+    navigate("/");
   };
 
   return (

@@ -1,52 +1,28 @@
-import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+  const navigate = useNavigate();
 
-	const { store, dispatch } = useGlobalReducer()
+  return (
+    <div className="container text-center mt-5">
+      <h1 className="mb-4">¡Bienvenido!</h1>
 
-	const loadMessage = async () => {
-		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
+      <img
+        src="https://i.pinimg.com/736x/d9/e1/0d/d9e10dba5d62a9e06dabc8761a28f6b4.jpg"
+        alt="Welcome"
+        className="img-fluid rounded mb-4"
+        style={{ maxWidth: "400px", height: "auto" }}
+      />
 
-			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-			const response = await fetch(backendUrl + "/api/hello")
-			const data = await response.json()
-
-			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-			return data
-
-		} catch (error) {
-			if (error.message) throw new Error(
-				`Could not fetch the message from the backend.
-				Please check if the backend is running and the backend port is public.`
-			);
-		}
-
-	}
-
-	useEffect(() => {
-		loadMessage()
-	}, [])
-
-	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
-			</div>
-		</div>
-	);
-}; 
+      <div className="d-flex justify-content-center gap-3">
+        <button className="btn btn-primary" onClick={() => navigate("/registro")}>
+          Registrarse
+        </button>
+        <button className="btn btn-secondary" onClick={() => navigate("/login")}>
+          Iniciar Sesión
+        </button>
+      </div>
+    </div>
+  );
+};
